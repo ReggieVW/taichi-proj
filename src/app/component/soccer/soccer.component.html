@@ -1,0 +1,202 @@
+<div class="container my-container">
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="c">Country</label>
+        <select name="" class="form-control custom-select-lg mb-3" id="c" #input1 (change)="updateValuesByCountry(input1.value)">
+            <option value="{{con.value}}" *ngFor="let con of countries">{{con.value}}</option>
+        </select>
+      </div>     
+    </div>  
+    <div class="col-6">
+      <div class="form-group">
+        <label for="s">Season</label>
+          <select name="" class="form-control custom-select-lg mb-3" id="s" #input2 (change)="updateValuesBySeason(input2.value)">
+            <option value="{{seas}}" *ngFor="let seas of seasons">{{seas}}</option>
+          </select>
+      </div>     
+    </div>    
+  </div> 
+  <div class="row">
+    <div class="col-6">
+        <div class="form-group">
+          <label for="l">Team</label>
+            <select name="" class="form-control custom-select-lg mb-3" id="l" #selectedTeam (change)="search(selectedTeam.value, selectedOppoTeam.value)">
+              <option value="{{team.name}}" *ngFor="let team of teams" >{{team.name}}</option>
+            </select>     
+      </div>
+    </div>
+  <div class="col-6">
+    <div class="form-group">
+      <label for="o">Opposing Team</label>
+      <select name="" class="form-control custom-select-lg mb-3" id="o" #selectedOppoTeam (change)="search(selectedTeam.value, selectedOppoTeam.value)">
+        <option value="{{team.name}}" *ngFor="let team of teams">{{team.name}}</option>
+      </select>
+    </div>     
+  </div>
+</div>
+<div class="container my-container">
+  <div class="row my-row">
+    <div class="col-8 my-col d-flex justify-content-center align-items-center">
+      <label>{{filterValues.team}}</label>
+      <label *ngIf="filterValues.teamOppo !== ''">&nbsp;vs&nbsp;</label>
+      <label>{{filterValues.teamOppo}}</label>
+    </div>
+    <div class="col-4  my-col">
+      <button (click)="clearTeams()" class="btn btn-primary">Clear selected teams</button>
+    </div>
+  </div>
+  <div class="row">
+      <mat-form-field>
+        <mat-label>Filter:</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter by team, date or score">
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
+
+<table mat-table [dataSource]="dataSourceReport" matSort class="table-striped mat-elevation-z8">
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="team1">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Home team </th>
+    <td mat-cell *matCellDef="let element"> {{element.team1}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="score">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Score </th>
+    <td mat-cell *matCellDef="let element"> {{element.ft}} </td>
+  </ng-container>
+
+    <ng-container matColumnDef="team2">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Away team </th>
+      <td mat-cell *matCellDef="let element"> {{element.team2}} </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsReport"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsReport;"></tr>
+</table>
+<mat-paginator [length]="10"
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+
+<div class="row">
+  <div class="col-sm">
+    Last update on: {{highestDate()}}
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="container">
+
+<div>
+  <label>Championship statistics for season {{selectedSeason}}</label>
+  </div>
+
+<table mat-table [dataSource]="dataSourceStat" matSort class="table-small table-striped w-auto">
+
+ <!-- <ng-container matColumnDef="Pos">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> index </th>
+    <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+  </ng-container>-->
+  
+  <ng-container matColumnDef="team" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
+    <td mat-cell *matCellDef="let element"> {{element.team}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="won">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Won </th>
+    <td mat-cell *matCellDef="let element"> {{element.won}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lost">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Lost </th>
+    <td mat-cell *matCellDef="let element"> {{element.lost}} </td>
+  </ng-container>
+
+    <ng-container matColumnDef="equal">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Equal </th>
+      <td mat-cell *matCellDef="let element"> {{element.equal}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="goals">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Goals </th>
+      <td mat-cell *matCellDef="let element"> {{element.goals}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="conceeded">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Conceeded Goals</th>
+      <td mat-cell *matCellDef="let element"> {{element.conceeded}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="points">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Points </th>
+      <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsStat"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsStat; "></tr>
+
+
+</table>
+</div>
+
+
+</div>
+<div class="col-sm">
+  <div *ngIf="home_stats.team != undefined || away_stats.team != undefined">
+    <label>Statistics for season {{selectedSeason}}</label>
+    </div>
+  
+<table *ngIf="home_stats.team != undefined || away_stats.team != undefined" class="table table-borderless">
+<tr>
+  <td></td>
+  <td *ngIf="home_stats.team != undefined">{{home_stats.team}} (Home Stats)</td>
+  <td *ngIf="away_stats.team != undefined">{{away_stats.team}} (Away Stats)</td>
+</tr>
+<tr>
+  <td>Wins (%)</td>
+  <td *ngIf="home_stats.team != undefined">{{((home_stats.won / home_stats.totalGames) * 100).toFixed(2)}} %</td>
+  <td *ngIf="away_stats.team != undefined">{{((away_stats.won  / away_stats.totalGames) * 100).toFixed(2)}} %</td>
+</tr>
+<tr>
+  <td>Draws (%)</td>
+  <td *ngIf="home_stats.team != undefined">{{((home_stats.equal / home_stats.totalGames) * 100).toFixed(2)}} %</td>
+  <td *ngIf="away_stats.team != undefined">{{((away_stats.equal / away_stats.totalGames) * 100).toFixed(2)}} %</td>
+</tr>
+<tr>
+  <td>Losses (%)</td>
+  <td *ngIf="home_stats.team != undefined">{{((home_stats.lost / home_stats.totalGames) * 100).toFixed(2)}} %</td>
+  <td *ngIf="away_stats.team != undefined">{{((away_stats.lost / away_stats.totalGames) * 100).toFixed(2)}} %</td>
+</tr>
+<tr>
+  <td>Avg Goals Scored</td>
+  <td *ngIf="home_stats.team != undefined">{{((home_stats.goals / home_stats.totalGames)).toFixed(2)}}</td>
+  <td *ngIf="away_stats.team != undefined">{{((away_stats.goals / away_stats.totalGames)).toFixed(2)}}</td>
+</tr>
+<tr>
+  <td>Avg Goals Conceeded</td>
+  <td *ngIf="home_stats.team != undefined">{{((home_stats.conceeded / home_stats.totalGames)).toFixed(2)}}</td>
+  <td *ngIf="away_stats.team != undefined">{{((away_stats.conceeded / away_stats.totalGames)).toFixed(2)}}</td>
+</tr>
+<tr>
+  <td>Games clean sheet</td>
+  <td *ngIf="home_stats.team != undefined">{{home_stats.cleanSheats}}</td>
+  <td *ngIf="away_stats.team != undefined">{{away_stats.cleanSheats}}</td>
+</tr>
+<tr>
+  <td>Games failed to scored</td>
+  <td *ngIf="home_stats.team != undefined">{{home_stats.failedToScore}}</td>
+  <td *ngIf="away_stats.team != undefined">{{away_stats.failedToScore}}</td>
+</tr>
+</table>
+</div>
+</div>

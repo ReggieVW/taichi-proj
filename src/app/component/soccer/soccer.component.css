@@ -1,0 +1,64 @@
+table {
+    width:100%;
+    color: gray;
+  }
+
+.table-small {
+    width: 40%;
+    border: 3px solid gray;
+  }
+
+  label {
+    color: black;
+    font-size: 18px;
+  }
+
+  button{
+    right:1rem;
+    font-size: 18px;
+    background-color:darkblue;
+    color: white;
+  }
+
+  div.container-team-display{
+    margin-top: 2em;
+    padding-top: 2em;
+    margin-left: 10em;
+    transform: translate(-50%, -50%)
+    }
+
+  th {
+    color:white;
+    background-color:black;
+    font-size: 18px;
+
+  }
+
+  .mat-form-field {
+    font-size: 18px;
+    width: 50%;
+  }
+  
+  .mat-column-position {
+    max-width: 100px;
+  }
+  
+  .mat-column-name {
+    max-width: 100px;
+  }
+
+  .highlight{
+    background: #42A948; /* green */
+  }
+
+  /*.my-container{
+    border: 1px solid green;
+  }
+  .my-row{
+    border: 3px solid red;
+  }
+  .my-col{
+    border:3px dotted blue;
+  }*/
+
+ 

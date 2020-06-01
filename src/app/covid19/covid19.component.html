@@ -1,0 +1,79 @@
+<div></div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div></div>
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ex. ium">
+  </mat-form-field>
+<div class="mat-elevation-z8"></div>
+<table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="country">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Country. </th>
+      <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cases">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> cases </th>
+      <td mat-cell *matCellDef="let element"> {{element.cases}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="todayCases">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> todayCases </th>
+      <td mat-cell *matCellDef="let element"> {{element.todayCases}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="deaths">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> deaths </th>
+      <td mat-cell *matCellDef="let element"> {{element.deaths}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="todayDeaths">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> todayDeaths </th>
+        <td mat-cell *matCellDef="let element"> {{element.todayDeaths}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="recovered">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> recovered </th>
+        <td mat-cell *matCellDef="let element"> {{element.recovered}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> active </th>
+        <td mat-cell *matCellDef="let element"> {{element.active}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="critical">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> critical </th>
+        <td mat-cell *matCellDef="let element"> {{element.critical}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="casesPerOneMillion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> casesPerOneMillion </th>
+        <td mat-cell *matCellDef="let element"> {{element.casesPerOneMillion}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deathsPerOneMillion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> deathsPerOneMillion </th>
+        <td mat-cell *matCellDef="let element"> {{element.deathsPerOneMillion}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tests">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> tests </th>
+        <td mat-cell *matCellDef="let element"> {{element.tests}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="testsPerOneMillion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> testsPerOneMillion </th>
+        <td mat-cell *matCellDef="let element"> {{element.testsPerOneMillion}} </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+  
